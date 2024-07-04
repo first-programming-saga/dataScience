@@ -1,0 +1,61 @@
+\documentclass[a4j,12pt]{ltjarticle}
+\usepackage{fancybox}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{url}
+\title{母集団平均の推定}
+\author{}
+\date{2020/10}
+\begin{document}
+\maketitle
+\section{標本平均の分布}
+平均$\mu$、標準偏差$\sigma$の母集団から、$n$個のサンプル$\left\lbrace x_i\right\rbrace$を無作為抽出する。
+標本平均と標本標準偏差は
+\begin{align}
+    \overline{x}&=\frac{1}{n}\sum_{i=0}^{n-1}x_i\\
+    s^2&=\frac{1}{n-1}\left(x_i-\overline{x}\right)^2
+\end{align}
+である。
+
+標本平均は、平均$\mu$、標準偏差$\sigma/\sqrt{n}$の正規分布に従う。
+これは、母集団の分布に依らない(中心極限定理)。
+
+実際に、$[0,1)$の一様分布に対して、標本サイズ100で標本平均の分布を求める。
+母集団の平均は$mu=1/2$、分散は$\sigma^2=1/12$である。
+図~\ref{normal}に示すように、平均$\mu$、標準偏差$\sigma/\sqrt{n}$の正規分布となっている。
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=80mm]{sampleMean.pdf}
+    \caption{$[0,1)$の一様分布に対する標本平均の分布。標本サイズは100}
+    \label{normal}
+\end{figure}
+
+\section{母集団平均の推定}
+一つの標本から、母集団の平均を推定することを考える。
+一つの標本であるため、標本平均と標本標準偏差を使うしかない。
+標本平均が、平均$\mu$、標準偏差$s/\sqrt{n}$の正規分布に従うとする。
+
+信頼係数を$c$とする。例えば、$c=.95$の場合、標本平均は、
+\begin{equation}
+-f\frac{s}{\sqrt{n}}<\overline{x}-\mu<f\frac{s}{\sqrt{n}}
+\end{equation}
+の範囲に入る。ここで、$f\simeq1.96$である。
+これを変形することで、標本平均から信頼係数に依存した区間を推定することができる。
+\begin{equation}
+    -\frac{fs}{\sqrt{n}}+\overline{x}<\mu<\frac{fs}{\sqrt{n}}+\overline{x}
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=80mm]{populationMean.pdf}
+    \caption{$[0,1)$の一様分布に対する標本平均から、母集団の平均の範囲を$95\%$で推計}
+    \label{populationMean}
+\end{figure}
+
+実際に、$[0,1)$の一様分布から1000個のサンプルを取り出し、$95\%$の信頼度で、母集団平均を推計する。
+図~\ref{populationMean}の横棒は、各サンプルで推定した母集団平均の範囲を表す。
+縦の破線は、正しい母集団平均である。
+\end{document}
